@@ -1,0 +1,7 @@
+{
+	"name":"url",
+	"description":"Url parser",
+	"version":"0.1.0",
+	"repo":"kaerus-component/url",
+	"scripts":["index.js"]
+}
