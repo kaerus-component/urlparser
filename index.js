@@ -24,7 +24,7 @@ var url = {
     protocol: undefined,
     username: undefined,
     password: undefined,
-    hostname: undefined,
+    host: undefined,
     port: undefined,
     path: {
         base: undefined,
@@ -75,7 +75,7 @@ function Url(parse) {
     
     if(typeof parse === 'string') {
         var q, p, u = URL.exec(parse);
-        if(u) {
+        if(u) {
             ret.protocol = u[1];
             ret.username = u[3];
             ret.password = u[4];
