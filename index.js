@@ -20,6 +20,19 @@ var URL = /^(?:([A-Za-z]+):)?(\/{0,3})(?:([^\x00-\x1F\x7F:]+)?:?([^\x00-\x1F\x7F
 
 var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
 
+function urlString(){
+    var str = "";
+
+    if(this.conn)
+        str+= this.conn.toString();
+    if(this.path)
+        str+= '/' + this.path.toString();
+    if(this.query)
+        str+= '?' + this.query.toString();
+
+    return str;
+}
+
 function connString(){
     var str = "";
   
@@ -58,18 +71,7 @@ function Url(parse) {
 
     Object.defineProperty(ret,'toString',{
         enumerable: false,
-        value:  function() {
-            var str = "";
-
-            if(this.conn)
-                str+= this.conn.toString();
-            if(this.path)
-                str+= '/' + this.path.toString();
-            if(this.query)
-                str+= '?' + this.query.toString();
-
-            return str;
-        }
+        value: urlString
     });    
     
     if(typeof parse === 'string') {
