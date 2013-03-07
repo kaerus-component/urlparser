@@ -20,43 +20,25 @@ var URL = /^(?:([A-Za-z]+):)?(\/{0,3})(?:([^\x00-\x1F\x7F:]+)?:?([^\x00-\x1F\x7F
 
 var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
 
-var url = {
-    protocol: undefined,
-    username: undefined,
-    password: undefined,
-    host: undefined,
-    port: undefined,
-    path: {
-        base: undefined,
-        hash: undefined,
-        query: {
-            parts: undefined,
-            params: undefined
-        },
-    }
-};
-
-function urlString(){
+function connString(){
     var str = "";
+  
     if(this.protocol) str+= this.protocol + '://';
     if(this.username) { 
         str+= this.username + (this.password ? ':' + this.password : '') + '@';
     }
-    if(this.hostname) str+= this.hostname; 
+    if(this.host) str+= this.host; 
     if(this.port) str+= ':' + this.port;
-    if(this.path.toString)
-        str+= '/' + this.path.toString();
-
+  
     return str;    
 }
 
 function pathString(){
     var str = "";
+  
     if(this.base) str+= this.base;
     if(this.hash) str+= '#' + this.hash;
-    if(this.query.toString)
-        str+= '?' + this.query.toString();
-
+  
     return str;     
 }
 
@@ -71,38 +53,77 @@ function queryString(){
 
 function Url(parse) {
 
-    var ret = Object.create(url);
+    var param, 
+        ret = {};
+
+    Object.defineProperty(ret,'toString',{
+        enumerable: false,
+        value:  function() {
+            var str = "";
+
+            if(this.conn)
+                str+= this.conn.toString();
+            if(this.path)
+                str+= '/' + this.path.toString();
+            if(this.query)
+                str+= '?' + this.query.toString();
+
+            return str;
+        }
+    });    
     
     if(typeof parse === 'string') {
-        var q, p, u = URL.exec(parse);
+        var q, p, u; 
+
+        u = URL.exec(parse);
+
         if(u) {
-            ret.protocol = u[1];
-            ret.username = u[3];
-            ret.password = u[4];
-            ret.hostname = u[5];
-            ret.port = u[6];
+            ret.conn = {};
+
+            Object.defineProperty(ret.conn,'toString',{
+                enumerable: false,
+                value: connString
+            });
+
+            ret.conn.protocol = u[1];
+            ret.conn.username = u[3];
+            ret.conn.password = u[4];
+            ret.conn.host = u[5];
+            ret.conn.port = u[6];
+
             p = PATH.exec(u[7]);
         } else {
             p = PATH.exec(parse);
         }
-
-        ret.toString = urlString;
         
         if(p) {
+            ret.path = {};
+
+            Object.defineProperty(ret.path,'toString',{
+                enumerable: false,
+                value: pathString
+            });
+
             ret.path.base = p[1];
             ret.path.hash = p[2];
-            ret.path.toString = pathString;
+            
             q = p[3];
 
             if(q) {
-                ret.path.query.parts = q.split('&');
-                if(ret.path.query.parts.length) {
-                    var param;
-                    ret.path.query.toString = queryString;
-                    ret.path.query.params = {};
-                    ret.path.query.parts.forEach(function(part){
+                ret.query = {};
+                ret.query.parts = q.split('&');
+                if(ret.query.parts.length) {
+                    
+                    Object.defineProperty(ret.query,'toString',{
+                        enumerable: false,
+                        value: queryString
+                    });
+
+                    ret.query.toString = queryString;
+                    ret.query.params = {};
+                    ret.query.parts.forEach(function(part){
                         param = part.split('='); 
-                        ret.path.query.params[param[0]] = param[1];   
+                        ret.query.params[param[0]] = param[1];   
                     });
                     
                 }    

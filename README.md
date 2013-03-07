@@ -3,32 +3,29 @@ Url
 
 Url parser
 
-```javascript
+```
 parse = require('kaerus-component-url');
 
-url = parse("http://some.dot.host:432/test#!/thing?query=string&more=stuff");
-{ 
-	protocol: 'http',
-  	username: undefined,
-  	password: undefined,
-  	hostname: 'some.dot.host',
-  	port: '432',
-  	path: { 
-  		base: 'test',
-  		hash: '!/thing',
-  		query: { 
-  			parts: [ 'query=string', 'more=stuff' ],
-     		params: {query:'string',more:'stuff'},
-  		}
-  	}
-}
+> u = parse('http://test:pra@123.12.3.1:555/test?a=1&b=2')
+{ conn: 
+   { protocol: 'http',
+     username: 'test',
+     password: 'pra',
+     host: '123.12.3.1',
+     port: '555' },
+  path: { base: 'test', hash: undefined },
+  query: 
+   { parts: [ 'a=1', 'b=2' ],
+     params: { a: '1', b: '2' } } }
+> u.toString()
+'http://test:pra@123.12.3.1:555/test?a=1&b=2'
+> u.conn.toString()
+'http://test:pra@123.12.3.1:555'
+> u.path.toString()
+'test'
+> u.query.toString()
+'a=1&b=2'
+> u.query.params.b
+'2'
 
-url.toString()
-'http://some.dot.host:432/test#!/thing?query=string&more=stuff'
-
-url.path.toString()
-'test#!/thing?query=string&more=stuff'
-
-url.path.query.toString()
-'query=string&more=stuff'
 ```
