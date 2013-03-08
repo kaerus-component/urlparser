@@ -7,11 +7,11 @@ Url parser
 parse = require('kaerus-component-url');
 
 > u = parse('http://test:pra@123.12.3.1:555/test?a=1&b=2')
-{ conn: 
+{ host: 
    { protocol: 'http',
      username: 'test',
      password: 'pra',
-     host: '123.12.3.1',
+     name: '123.12.3.1',
      port: '555' },
   path: { base: 'test', hash: undefined },
   query: 
@@ -19,7 +19,7 @@ parse = require('kaerus-component-url');
      params: { a: '1', b: '2' } } }
 > u.toString()
 'http://test:pra@123.12.3.1:555/test?a=1&b=2'
-> u.conn.toString()
+> u.host.toString()
 'http://test:pra@123.12.3.1:555'
 > u.path.toString()
 'test'

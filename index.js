@@ -23,8 +23,8 @@ var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
 function urlString(){
     var str = "";
 
-    if(this.conn)
-        str+= this.conn.toString();
+    if(this.host)
+        str+= this.host.toString();
     if(this.path)
         str+= '/' + this.path.toString();
     if(this.query)
@@ -33,14 +33,14 @@ function urlString(){
     return str;
 }
 
-function connString(){
+function hostString(){
     var str = "";
   
     if(this.protocol) str+= this.protocol + '://';
     if(this.username) { 
         str+= this.username + (this.password ? ':' + this.password : '') + '@';
     }
-    if(this.host) str+= this.host; 
+    if(this.name) str+= this.name; 
     if(this.port) str+= ':' + this.port;
   
     return str;    
@@ -80,18 +80,18 @@ function Url(parse) {
         u = URL.exec(parse);
 
         if(u) {
-            ret.conn = {};
+            ret.host = {};
 
-            Object.defineProperty(ret.conn,'toString',{
+            Object.defineProperty(ret.host,'toString',{
                 enumerable: false,
-                value: connString
+                value: hostString
             });
 
-            ret.conn.protocol = u[1];
-            ret.conn.username = u[3];
-            ret.conn.password = u[4];
-            ret.conn.host = u[5];
-            ret.conn.port = u[6];
+            ret.host.protocol = u[1];
+            ret.host.username = u[3];
+            ret.host.password = u[4];
+            ret.host.name = u[5];
+            ret.host.port = u[6];
 
             p = PATH.exec(u[7]);
         } else {
