@@ -95,22 +95,24 @@ function Url(parse) {
                 ret.host.port = u[6];
             }    
 
-            p = PATH.exec(u[7]);
+            if(u[7]) p = PATH.exec(u[7]);
         } else {
             p = PATH.exec(parse);
         }
         
         if(p) {
-            ret.path = {};
+            if(p[1]){
+                ret.path = {};
 
-            Object.defineProperty(ret.path,'toString',{
-                enumerable: false,
-                value: pathString
-            });
+                Object.defineProperty(ret.path,'toString',{
+                    enumerable: false,
+                    value: pathString
+                });
 
-            ret.path.base = p[1];
-            ret.path.hash = p[2];
-            
+                ret.path.base = p[1];
+                ret.path.hash = p[2];
+            }
+
             q = p[3];
 
             if(q) {
