@@ -80,20 +80,18 @@ function Url(parse) {
         u = URL.exec(parse);
 
         if(u) {
-            if(u[5]) {
-                ret.host = {};
+            ret.host = {};
 
-                Object.defineProperty(ret.host,'toString',{
-                    enumerable: false,
-                    value: hostString
-                });
+            Object.defineProperty(ret.host,'toString',{
+                enumerable: false,
+                value: hostString
+            });
 
-                ret.host.protocol = u[1];
-                ret.host.username = u[3];
-                ret.host.password = u[4];
-                ret.host.name = u[5];
-                ret.host.port = u[6];
-            }    
+            ret.host.protocol = u[1];
+            ret.host.username = u[3];
+            ret.host.password = u[4];
+            ret.host.name = u[5];
+            ret.host.port = u[6]; 
 
             if(u[7]) p = PATH.exec(u[7]);
         } else {
