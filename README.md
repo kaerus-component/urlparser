@@ -4,9 +4,9 @@ Url
 Url parser
 
 ```
-parse = require('kaerus-component-url');
+var url = require('url');
 
-> u = parse('http://test:pra@123.12.3.1:555/test?a=1&b=2')
+> u = url.parse('http://test:pra@123.12.3.1:555/test?a=1&b=2')
 { host: 
    { protocol: 'http',
      username: 'test',

@@ -138,5 +138,5 @@ function Url(parse) {
     return ret; 
 }
 
-module.exports = Url;
+module.exports = {parse:Url};
 
