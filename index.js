@@ -1,21 +1,5 @@
 // Kaerus - Anders Elo 2013
 
-
-/*
-http://www.w3.org/TR/html4/types.html#type-name
-ID and NAME tokens must begin with a letter ([A-Za-z]) 
-and may be followed by any number of letters, digits ([0-9]), 
-hyphens ("-"), underscores ("_"), colons (":"), and periods (".").
-
-ABNF notation
-fragment      = *( pchar / "/" / "?" )
-pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-pct-encoded   = "%" HEXDIG HEXDIG
-sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-                 / "*" / "+" / "," / ";" / "="
-*/
-
 var URL = /^(?:([A-Za-z]+):)?(\/{0,3})(?:([^\x00-\x1F\x7F:]+)?:?([^\x00-\x1F\x7F:]*)@)?([\w]{1,61}?\.[\w\.]{1,61})?(?::(\d+))?(?:\/([^\x00-\x1F\x7F]+))?$/;
 
 var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
@@ -139,4 +123,3 @@ function Url(parse) {
 }
 
 module.exports = {parse:Url};
-
