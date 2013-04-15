@@ -3,5 +3,6 @@
 	"description":"Url parser",
 	"version":"0.2.3",
 	"repo":"kaerus-component/url",
-	"scripts":["index.js"]
+	"scripts":["index.js"],
+	"license": "Apache2_0"
 }
