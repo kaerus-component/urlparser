@@ -1,0 +1,33 @@
+{
+  "name": "url",
+  "version": "0.2.5",
+  "description": "Url parser",
+  "keywords": [
+    "url",
+    "parse"
+  ],
+  "author": { 
+    "name": "Kaerus",
+    "email": "contact@kaerus.com",
+    "web": "http://kaerus.com"
+  },
+  "contributors": [
+    "anders elo <anders@kaerus.com>"
+  ],
+  "devDependencies": {
+    "mocha":"*",
+    "should":"*"
+  },
+  "bugs": {
+    "url": "https://github.com/kaerus-component/url/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kaerus-component/url"
+  },
+  "scripts": {
+    "test":"make test"
+  },
+  "main": "index.js",
+  "license": "APACHE2_0"
+}

@@ -71,11 +71,12 @@ function Url(parse) {
                 value: hostString
             });
 
-            ret.host.protocol = u[1];
-            ret.host.username = u[3];
-            ret.host.password = u[4];
-            ret.host.name = u[5];
-            ret.host.port = u[6]; 
+            /* avoid undefined assignments */
+            if(u[1]) ret.host.protocol = u[1];
+            if(u[3]) ret.host.username = u[3];
+            if(u[4]) ret.host.password = u[4];
+            if(u[5]) ret.host.name = u[5];
+            if(u[6]) ret.host.port = u[6]; 
 
             if(u[7]) p = PATH.exec(u[7]);
         } else {
@@ -91,8 +92,8 @@ function Url(parse) {
                     value: pathString
                 });
 
-                ret.path.base = p[1];
-                ret.path.hash = p[2];
+                if(p[1]) ret.path.base = p[1];
+                if(p[2]) ret.path.hash = p[2];
             }
 
             q = p[3];
