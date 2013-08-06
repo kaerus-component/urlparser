@@ -24,7 +24,7 @@ function hostString(){
     if(this.username) { 
         str+= this.username + (this.password ? ':' + this.password : '') + '@';
     }
-    if(this.name) str+= this.name; 
+    if(this.hostname) str+= this.hostname; 
     if(this.port) str+= ':' + this.port;
   
     return str;    
@@ -75,7 +75,7 @@ function Url(parse) {
             if(u[1]) ret.host.protocol = u[1];
             if(u[3]) ret.host.username = u[3];
             if(u[4]) ret.host.password = u[4];
-            if(u[5]) ret.host.name = u[5];
+            if(u[5]) ret.host.hostname = u[5];
             if(u[6]) ret.host.port = u[6]; 
 
             if(u[7]) p = PATH.exec(u[7]);
