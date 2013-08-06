@@ -1,8 +1,8 @@
 {
-	"name":"url",
+	"name":"urlparser",
 	"description":"Url parser",
 	"version":"0.2.5",
-	"repo":"kaerus-component/url",
+	"repo":"kaerus-component/urlparser",
 	"scripts":["index.js"],
 	"license": "Apache2_0"
 }

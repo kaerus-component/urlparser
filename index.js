@@ -108,7 +108,6 @@ function Url(parse) {
                         value: queryString
                     });
 
-                    ret.query.toString = queryString;
                     ret.query.params = {};
                     ret.query.parts.forEach(function(part){
                         param = part.split('='); 
