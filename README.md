@@ -7,6 +7,7 @@
 Provides with an Url parser that deconstructs an url into a managable object and back to a string.
 
  ### Examples:
+ 
      url = require('urlparser');
      
      var u = url.parse('http://user:pass@kaerus.com/login?x=42');
