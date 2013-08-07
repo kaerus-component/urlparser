@@ -35,7 +35,7 @@
     "logo":"http://kaerus.com/images/kaerus64.png",
     "options":{
       "exclude":"build,node_modules,test",
-      "ignorePathds": [ "build","node_modules","test" ],
+      "ignorePaths": [ "build","node_modules","test" ],
       "outdir":"./build/apidoc",
       "paths": "*/js"
     }  
