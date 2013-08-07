@@ -1,48 +1,68 @@
-Url
-===
 
-Url parser
 
-```
-var url = require('url');
+<!-- Start index.js -->
 
-> u = url.parse('http://test:pra@123.12.3.1:555/test?a=1&b=2')
-{ host: 
-   { protocol: 'http',
-     username: 'test',
-     password: 'pra',
-     name: '123.12.3.1',
-     port: '555' },
-  path: { base: 'test', hash: undefined },
-  query: 
-   { parts: [ 'a=1', 'b=2' ],
-     params: { a: '1', b: '2' } } }
-> u.toString()
-'http://test:pra@123.12.3.1:555/test?a=1&b=2'
-> u.host.toString()
-'http://test:pra@123.12.3.1:555'
-> u.path.toString()
-'test'
-> u.query.toString()
-'a=1&b=2'
-> u.query.params.b
-'2'
+## urlparser
 
-```
+Provides with an Url parser that deconstructs an url into a managable object and back to a string.
 
-License
-=======
-```
-Copyright (c) 2013 Kaerus (kaerus.com), Anders Elo <anders @ kaerus com>.
-```
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
- 
-    http://www.apache.org/licenses/LICENSE-2.0
- 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+     url = require('urlparser');
+     
+     var u = url.parse(&quot;http://user:pass@kaerus.com/login?x=42&quot;);
+     
+     u.host.hostname = 'database.kaerus.com'
+     u.host.password = 'secret';
+     u.host.port = 8529;
+     u.query.parts.push({a:13});
+     u.toString(); //=&gt; 'http://user:secret@database.kaerus.com:8529/login?x=42&amp;a=13'
+     
+
+## UrlParser({String})
+
+@class  UrlParser
+
+### Params: 
+
+* **url** *{String}* 
+
+@method  toString 
+
+### Return:
+
+* **String** 
+
+## host
+
+Host attributes
+
+     host: {
+         protocol: {String}
+         username: {String}
+         password: {String}
+         hostname: {String}
+         port: {String}
+     }
+     
+
+## path
+
+Path information
+
+     path: {
+         base: {String} // base path without hash
+         hash: {String} // the #hash part in path
+     }
+     
+
+## query
+
+Query parameters
+
+     query: {
+         parts: {Array}   // query segments [&quot;a=3&quot;,&quot;x=2&quot;] 
+         params: {Object} // query parameters {a:3,x:2}
+     }
+     
+
+<!-- End index.js -->
+

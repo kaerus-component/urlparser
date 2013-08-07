@@ -1,62 +1,91 @@
-// Kaerus - Anders Elo 2013
+/**
+ * Provides with an Url parser that deconstructs an url into a managable object and back to a string.
+ * 
+ *      url = require('urlparser');
+ *      
+ *      var u = url.parse("http://user:pass@kaerus.com/login?x=42");
+ *      
+ *      u.host.hostname = 'database.kaerus.com'
+ *      u.host.password = 'secret';
+ *      u.host.port = 8529;
+ *      u.query.parts.push({a:13});
+ *      u.toString(); //=> 'http://user:secret@database.kaerus.com:8529/login?x=42&a=13'
+ *      
+ * @module  urlparser
+ * @name urlparser
+ * @main  urlparser
+ */
 
 var URL = /^(?:([A-Za-z]+):)?(\/{0,3})(?:([^\x00-\x1F\x7F:]+)?:?([^\x00-\x1F\x7F:]*)@)?([\w]{1,61}?\.?[\w\.]{1,61})?(?::(\d+))?(?:\/([^\x00-\x1F\x7F]+))?$/;
 
 var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
 
-function urlString(){
+function urlString(o){
     var str = "";
 
-    if(this.host)
-        str+= this.host.toString();
-    if(this.path)
-        str+= '/' + this.path.toString();
-    if(this.query)
-        str+= '?' + this.query.toString();
+    o = o ? o : this;
+
+    if(o.host)
+        str+= hostString(o.host);
+    if(o.path)
+        str+= '/' + pathString(o.path);
+    if(o.query)
+        str+= '?' + queryString(o.query);
 
     return str;
 }
 
-function hostString(){
+function hostString(o){
     var str = "";
   
-    if(this.protocol) str+= this.protocol + '://';
-    if(this.username) { 
-        str+= this.username + (this.password ? ':' + this.password : '') + '@';
+    if(o.protocol) str+= o.protocol + '://';
+    if(o.username) { 
+        str+= o.username + (o.password ? ':' + o.password : '') + '@';
     }
-    if(this.hostname) str+= this.hostname; 
-    if(this.port) str+= ':' + this.port;
+    if(o.hostname) str+= o.hostname; 
+    if(o.port) str+= ':' + o.port;
   
     return str;    
 }
 
-function pathString(){
+function pathString(o){
     var str = "";
   
-    if(this.base) str+= this.base;
-    if(this.hash) str+= '#' + this.hash;
+    if(o.base) str+= o.base;
+    if(o.hash) str+= '#' + o.hash;
   
     return str;     
 }
 
-function queryString(){
+function queryString(o){
     var str = "";
     
-    if(this.parts)
-        str+= this.parts.join('&');
+    if(o.parts)
+        str+= o.parts.join('&');
 
     return str;    
 }
 
-function Url(parse) {
+/**
+ * @class  UrlParser
+ * @constructor
+ * @static
+ * @param url {String}
+ */
+function UrlParser(parse) {
 
     var param, 
         ret = {};
 
+    /**
+     * @method  toString 
+     * @return {String}
+     */
     Object.defineProperty(ret,'toString',{
         enumerable: false,
         value: urlString
-    });    
+    });   
+
     
     if(typeof parse === 'string') {
         var q, p, u; 
@@ -64,14 +93,23 @@ function Url(parse) {
         u = URL.exec(parse);
 
         if(u) {
+
+            /**
+             * Host attributes
+             *
+             *      host: {
+             *          protocol: {String}
+             *          username: {String}
+             *          password: {String}
+             *          hostname: {String}
+             *          port: {String}
+             *      }
+             *      
+             * @attribute host
+             * @type {Object} 
+             */
             ret.host = {};
 
-            Object.defineProperty(ret.host,'toString',{
-                enumerable: false,
-                value: hostString
-            });
-
-            /* avoid undefined assignments */
             if(u[1]) ret.host.protocol = u[1];
             if(u[3]) ret.host.username = u[3];
             if(u[4]) ret.host.password = u[4];
@@ -85,12 +123,18 @@ function Url(parse) {
         
         if(p) {
             if(p[1]){
+                /**
+                 * Path information
+                 *
+                 *      path: {
+                 *          base: {String} // base path without hash
+                 *          hash: {String} // the #hash part in path
+                 *      }
+                 *      
+                 * @attribute path
+                 * @type {Object} 
+                 */
                 ret.path = {};
-
-                Object.defineProperty(ret.path,'toString',{
-                    enumerable: false,
-                    value: pathString
-                });
 
                 if(p[1]) ret.path.base = p[1];
                 if(p[2]) ret.path.hash = p[2];
@@ -99,14 +143,20 @@ function Url(parse) {
             q = p[3];
 
             if(q) {
+                /**
+                 * Query parameters
+                 *
+                 *      query: {
+                 *          parts: {Array}   // query segments ["a=3","x=2"] 
+                 *          params: {Object} // query parameters {a:3,x:2}
+                 *      }
+                 *      
+                 * @attribute query
+                 * @type {Object} 
+                 */
                 ret.query = {};
                 ret.query.parts = q.split('&');
                 if(ret.query.parts.length) {
-                    
-                    Object.defineProperty(ret.query,'toString',{
-                        enumerable: false,
-                        value: queryString
-                    });
 
                     ret.query.params = {};
                     ret.query.parts.forEach(function(part){
@@ -122,4 +172,4 @@ function Url(parse) {
     return ret; 
 }
 
-module.exports = {parse:Url};
+module.exports = {parse:UrlParser};

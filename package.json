@@ -1,6 +1,6 @@
 {
   "name": "urlparser",
-  "version": "0.3.1",
+  "version": "0.3.5",
   "description": "Url parser",
   "keywords": [
     "url",
@@ -29,5 +29,15 @@
     "test":"make test"
   },
   "main": "index.js",
-  "license": "APACHE2_0"
+  "license": "APACHE2_0",
+  "yuidoc":{
+    "url":"https://github.com/kaerus-component/urlparser",
+    "logo":"http://kaerus.com/images/kaerus64.png",
+    "options":{
+      "exclude":"build,node_modules,test",
+      "ignorePathds": [ "build","node_modules","test" ],
+      "outdir":"./build/apidoc",
+      "paths": "*/js"
+    }  
+  }      
 }
