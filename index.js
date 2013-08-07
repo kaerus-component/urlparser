@@ -3,13 +3,13 @@
  * 
  *      url = require('urlparser');
  *      
- *      var u = url.parse("http://user:pass@kaerus.com/login?x=42");
+ *      var u = url.parse('http://user:pass@kaerus.com/login?x=42');
  *      
  *      u.host.hostname = 'database.kaerus.com'
  *      u.host.password = 'secret';
  *      u.host.port = 8529;
  *      u.query.parts.push({a:13});
- *      u.toString(); //=> 'http://user:secret@database.kaerus.com:8529/login?x=42&a=13'
+ *      u.toString(); // 'http://user:secret@database.kaerus.com:8529/login?x=42&a=13'
  *      
  * @module  urlparser
  * @name urlparser
@@ -71,6 +71,7 @@ function queryString(o){
  * @constructor
  * @static
  * @param url {String}
+ * @return {Object}
  */
 function UrlParser(parse) {
 
@@ -147,7 +148,7 @@ function UrlParser(parse) {
                  * Query parameters
                  *
                  *      query: {
-                 *          parts: {Array}   // query segments ["a=3","x=2"] 
+                 *          parts: {Array}   // query segments ['a=3','x=2'] 
                  *          params: {Object} // query parameters {a:3,x:2}
                  *      }
                  *      

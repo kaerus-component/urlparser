@@ -8,13 +8,13 @@ Provides with an Url parser that deconstructs an url into a managable object and
 
      url = require('urlparser');
      
-     var u = url.parse(&quot;http://user:pass@kaerus.com/login?x=42&quot;);
+     var u = url.parse('http://user:pass@kaerus.com/login?x=42');
      
      u.host.hostname = 'database.kaerus.com'
      u.host.password = 'secret';
      u.host.port = 8529;
      u.query.parts.push({a:13});
-     u.toString(); //=&gt; 'http://user:secret@database.kaerus.com:8529/login?x=42&amp;a=13'
+     u.toString(); // 'http://user:secret@database.kaerus.com:8529/login?x=42&amp;a=13'
      
 
 ## UrlParser({String})
@@ -24,6 +24,10 @@ Provides with an Url parser that deconstructs an url into a managable object and
 ### Params: 
 
 * **url** *{String}* 
+
+### Return:
+
+* **Object** 
 
 @method  toString 
 
@@ -59,7 +63,7 @@ Path information
 Query parameters
 
      query: {
-         parts: {Array}   // query segments [&quot;a=3&quot;,&quot;x=2&quot;] 
+         parts: {Array}   // query segments ['a=3','x=2'] 
          params: {Object} // query parameters {a:3,x:2}
      }
      
