@@ -3,12 +3,71 @@ url = require('..');
 
 describe('Url', function(){
     describe('methods', function(){
-        it('should expose parse method', function(){
+        it('should export parse method', function(){
             url.should.have.ownProperty('parse');
         })
     })
 
     describe('parse', function(){
+       it('should parse /hello',function(){
+          var parsed = url.parse('/hello');
+          parsed.should.eql({
+            path: {base: 'hello'}
+          })
+        })
+
+       it('should parse /hello.world',function(){
+          var parsed = url.parse('/hello.world');
+          parsed.should.eql({
+            path: {base: 'hello.world'}
+          })
+        })
+
+
+        it('should parse /hello:world',function(){
+          var parsed = url.parse('/hello:world');
+          parsed.should.eql({
+            path: {base: 'hello', name:'world'}
+          })
+        })
+
+        it('should parse /hello:/world',function(){
+          var parsed = url.parse('/hello:/world');
+          parsed.should.eql({
+            path: {base: 'hello', name:'/world'}
+          })
+        })
+
+        it('should parse /hello:/world',function(){
+          var parsed = url.parse('/hello:/world.file');
+          parsed.should.eql({
+            path: {base: 'hello', name:'/world.file'}
+          })
+        })
+
+        it('should parse /hello:world#hash',function(){
+          var parsed = url.parse('/hello:world#hash');
+          parsed.should.eql({
+            path: {base: 'hello', name:'world', hash:'hash'}
+          })
+        })
+
+        it('should parse /hello:world#hash?query=test',function(){
+          var parsed = url.parse('/hello:world#hash?query=test');
+          parsed.should.eql({
+            path: {base: 'hello', name:'world', hash: 'hash'},
+            query:{parts:['query=test'], "params":{query:'test'}}
+          })
+        })
+
+        it('should parse /hello:world#hash?query=test&another=option',function(){
+          var parsed = url.parse('/hello:world#hash?query=test&another=option');
+          parsed.should.eql({
+            path: {base: 'hello', name:'world', hash: 'hash'},
+            query:{parts:['query=test','another=option'], "params":{query:'test',another:'option'}}
+          })
+        })
+
         it('should parse http://test.com/hello', function(){
            	var parsed = url.parse('http://test.com/hello');
            	parsed.should.eql( {host:{protocol:"http",hostname:"test.com"},path:{base:"hello"}});

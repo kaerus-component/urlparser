@@ -1,6 +1,6 @@
 {
   "name": "urlparser",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Url parser",
   "keywords": [
     "url",
@@ -16,7 +16,9 @@
   ],
   "devDependencies": {
     "mocha":"*",
-    "should":"*"
+    "should":"*",
+    "chai": "*",
+    "mocha-phantomjs":"*"
   },
   "bugs": {
     "url": "https://github.com/kaerus-component/url/issues"

@@ -18,9 +18,9 @@
  * @main  urlparser
  */
 
-var URL = /^(?:([A-Za-z]+):)?(\/{0,3})(?:([^\x00-\x1F\x7F:]+)?:?([^\x00-\x1F\x7F:]*)@)?([\w]{1,61}?\.?[\w\.]{1,61})?(?::(\d+))?(?:\/([^\x00-\x1F\x7F]+))?$/;
+var URL = /^(?:([A-Za-z]+):)?(\/{2,3})(?:([^\x00-\x1F^\x7F:]+)?:?([^\x00-\x1F^\x7F^:]*)@)?([\w]{1,61}?\.?[\w\.]{1,61})?(?::(\d+))?(?:\/([^\x00-\x1F\x7F]+))?$/;
 
-var PATH = /^([^\x00-\x1F^\#^\?]+)?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
+var PATH = /^\/?(([^\x00-\x1F^\#^\?^:]+))?(?::([^\x00-\x1F^\#^\?^:]+))?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
 
 function urlString(o){
     var str = "";
@@ -131,6 +131,7 @@ function UrlParser(parse) {
                  *
                  *      path: {
                  *          base: {String} // base path without hash
+                 *          name: {String} // file or directory name
                  *          hash: {String} // the #hash part in path
                  *      }
                  *      
@@ -139,11 +140,12 @@ function UrlParser(parse) {
                  */
                 ret.path = {};
 
-                if(p[1]) ret.path.base = p[1];
-                if(p[2]) ret.path.hash = p[2];
+                if(p[2]) ret.path.base = p[2];
+                if(p[3]) ret.path.name = p[3];
+                if(p[4]) ret.path.hash = p[4];
             }
 
-            q = p[3];
+            q = p[5];
 
             if(q) {
                 /**
