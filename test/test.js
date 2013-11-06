@@ -105,6 +105,23 @@ describe('Url', function(){
             should.equal(parsed.toString(),'http://test.com/hello');
         })
 
+        it('http://test.com/hello:world', function(){
+            var parsed = url.parse('http://test.com/hello:world');
+            parsed.should.eql( {host:{protocol:"http",hostname:"test.com"},path:{base:"hello",name:"world"}});
+
+            should.equal(parsed.toString(),'http://test.com/hello:world');
+        })
+
+        it('scp://user:pass@test.com:world', function(){
+            var parsed = url.parse('scp://user:pass@test.com:world');
+            parsed.should.eql( {
+              host:{protocol:"scp",hostname:"test.com",username:"user",password:"pass"},
+              path:{name:"world"}
+            });
+
+            should.equal(parsed.toString(),'scp://user:pass@test.com:world');
+        })
+
         it('http://test.com/?what=hello', function(){
            	var parsed = url.parse('http://test.com/?what=hello');
            	parsed.should.eql( {

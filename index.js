@@ -20,7 +20,7 @@
 
 var URL = /^(?:([A-Za-z]+):)?(\/{2})(?:(\w+)?:?([^\x00-\x1F^\x7F^:]*)@)?([\w]{1,61}?\.?[\w\.]{1,61})?(?::(\d+))?([^\x00-\x1F^\x7F]*)?$/;
 
-var PATH = /^\/?(([^\x00-\x1F^\x7F^\#^\?^:]+))?(?::([^\x00-\x1F^\x7F^\#^\?]+))?(?:#([^\x00-\x1F^\?]+))?(?:\?(.*))?$/;
+var PATH = /^\/?(([^\x00-\x1F^\x7F^\#^\?^:]+)?(?::([^\x00-\x1F^\x7F^\#^\?]+))?(?:#([^\x00-\x1F^\?]+))?)(?:\?(.*))?$/;
 
 function urlString(o){
     var str = "";
@@ -30,9 +30,9 @@ function urlString(o){
     if(o.host)
         str+= hostString(o.host);
     if(o.path)
-        str+= '/' + pathString(o.path);
+        str+= pathString(o.path);
     if(o.query)
-        str+= '?' + queryString(o.query);
+        str+= queryString(o.query);
 
     return str;
 }
@@ -53,7 +53,7 @@ function hostString(o){
 function pathString(o){
     var str = "";
   
-    if(o.base) str+= o.base;
+    if(o.base) str+= '/' + o.base;
     if(o.name) str+= ':' + o.name;
     if(o.hash) str+= '#' + o.hash;
   
@@ -61,7 +61,7 @@ function pathString(o){
 }
 
 function queryString(o){
-    var str = "";
+    var str = "?";
     
     if(o.parts)
         str+= o.parts.join('&');
@@ -126,19 +126,19 @@ function UrlParser(parse) {
         }
         
         if(p) {
-            if(p[1]){
-                /**
-                 * Path information
-                 *
-                 *      path: {
-                 *          base: {String} // base path without hash
-                 *          name: {String} // file or directory name
-                 *          hash: {String} // the #hash part in path
-                 *      }
-                 *      
-                 * @attribute path
-                 * @type {Object} 
-                 */
+            /**
+             * Path information
+             *
+             *      path: {
+             *          base: {String} // base path without hash
+             *          name: {String} // file or directory name
+             *          hash: {String} // the #hash part in path
+             *      }
+             *      
+             * @attribute path
+             * @type {Object} 
+             */
+            if(p[1]) { 
                 ret.path = {};
 
                 if(p[2]) ret.path.base = p[2];
