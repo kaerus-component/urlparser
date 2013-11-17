@@ -151,6 +151,7 @@ describe('Url', function(){
             should.equal(parsed.toString(),'http://user:pass@test.com');
         })
 
+
         it('ftp://user:pass@test.com', function(){
             var parsed = url.parse('ftp://user:pass@test.com');
             parsed.should.eql( {
@@ -168,6 +169,16 @@ describe('Url', function(){
             });
 
             should.equal(parsed.toString(),"https://user:pass@localhost:8529/path");
+        })
+
+        it('http://user:pass@test.a-dash.com', function(){
+            var parsed = url.parse('http://user:pass@test.a-dash.com/path');
+            parsed.should.eql( {
+              host: {protocol:"http",hostname:"test.a-dash.com",username:"user",password:"pass"},
+              path:{base:"path"}
+            });
+
+            should.equal(parsed.toString(),'http://user:pass@test.a-dash.com/path');
         })
 
         it('http://user:pass@test.com/index.html#start', function(){
