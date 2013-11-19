@@ -6,7 +6,61 @@ describe('Url', function(){
         it('parse', function(){
             url.should.have.ownProperty('parse');
         })
+
+        it('host', function(){
+            url.should.have.ownProperty('host');
+        })
+
+        it('path', function(){
+            url.should.have.ownProperty('path');
+        })
+
+        it('query', function(){
+            url.should.have.ownProperty('query');
+        })
+
+        it('url', function(){
+            url.should.have.ownProperty('url');
+        })
     })
+
+    describe('host', function(){
+      it('host("http://127.0.0.1:1234/test:me")',function(){
+        var parsed = url.parse("http://127.0.0.1:1234/test:me");
+        url.host(parsed).should.eql("http://127.0.0.1:1234");
+      })
+
+      it('host("test.com:1234/test#hash")',function(){
+        var parsed = url.parse("test.com:1234/test#hash");
+        url.host(parsed).should.eql("test.com:1234");
+      })
+    })
+
+    describe('path', function(){
+      it('path("http://127.0.0.1:1234/test:me")',function(){
+        var parsed = url.parse("http://127.0.0.1:1234/test:me");
+        url.path(parsed).should.eql("/test:me");
+      })
+
+      it('path("test.com:1234/test#hash?a=b")',function(){
+        var parsed = url.parse("test.com:1234/test#hash?a=b");
+        url.path(parsed).should.eql("/test#hash");
+      })
+    })
+
+    describe('query', function(){
+      it('query("http://127.0.0.1:1234/test:me?a=1")',function(){
+        var parsed = url.parse("http://127.0.0.1:1234/test:me?a=1");
+        url.query(parsed).should.eql("?a=1");
+      })
+
+      it('query("test.com:1234/test#hash?a=b&b=2")',function(){
+        var parsed = url.parse("test.com:1234/test#hash?a=1&b=2");
+        url.query(parsed).should.eql("?a=1&b=2");
+      })
+    })
+
+
 
     describe('parse', function(){
        it('/hello',function(){
@@ -171,7 +225,7 @@ describe('Url', function(){
             should.equal(parsed.toString(),"https://user:pass@localhost:8529/path");
         })
 
-        it('http://user:pass@test.a-dash.com', function(){
+        it('http://user:pass@test.a-dash.com/path', function(){
             var parsed = url.parse('http://user:pass@test.a-dash.com/path');
             parsed.should.eql( {
               host: {protocol:"http",hostname:"test.a-dash.com",username:"user",password:"pass"},
